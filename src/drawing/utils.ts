@@ -36,7 +36,6 @@ const getPaint = (strokeWidth: number, color: string) => {
   paint.setAntiAlias(true);
   const _color = paint.copy();
   _color.setColor(Skia.Color(color));
-  console.log(color);
   return _color;
 };
 

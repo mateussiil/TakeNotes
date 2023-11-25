@@ -20,6 +20,7 @@ import useDrawingStore, {CurrentPath} from '../store';
 import Header from '../components/header';
 import history from './history';
 import Toolbar from '../components/toolbar';
+import { randomId } from './utils';
 
 const Drawing = () => {
   const touchState = useRef(false);
@@ -27,7 +28,7 @@ const Drawing = () => {
   const currentPath = useRef<CurrentPath | null>();
   const {width} = useWindowDimensions();
   const completedPaths = useDrawingStore(state => state.completedPaths);
-  const setCompletedPaths = useDrawingStore(state => state.setCompletedPaths);
+  const addCompletedPath = useDrawingStore(state => state.addCompletedPath);
   const stroke = useDrawingStore(state => state.stroke);
   const [canvasHeight, setCanvasHeight] = useState(400);
 
@@ -73,9 +74,9 @@ const Drawing = () => {
 
   const onDrawingFinished = useCallback(() => {
     updatePaths();
-    // currentPath.current = null;
     touchState.current = false;
-  }, [completedPaths.length]);
+    currentPath.current = null;
+  }, []);
 
   const touchHandler = useTouchHandler({
     onActive: onDrawingActive,
@@ -87,15 +88,22 @@ const Drawing = () => {
     if (!currentPath.current) {
       return;
     }
+    
+    if (!currentPath.current) {
+      return;
+    }
 
-    const updatedPaths = [...completedPaths];
-    updatedPaths.push({
+    // const updatedPaths = [...completedPaths];
+
+    const newPath = {
       path: currentPath.current?.path.copy(),
       paint: currentPath.current?.paint.copy(),
       color: useDrawingStore.getState().color,
-    });
+    }
+
     history.push(currentPath.current);
-    setCompletedPaths(updatedPaths);
+
+    addCompletedPath(newPath);
   };
 
   const onDraw = useDrawCallback((_canvas, info) => {
@@ -148,7 +156,6 @@ const Drawing = () => {
             onDraw={onDraw}
             style={{height: canvasHeight, width: width - 24, zIndex: 10}}
           />
-
           <Canvas
             style={{
               height: canvasHeight,
@@ -157,7 +164,7 @@ const Drawing = () => {
             }}>
             {completedPaths?.map(path => (
               <Path
-                key={path.path.toSVGString()}
+                key={randomId()}
                 path={path.path}
                 paint={path.paint}
               />

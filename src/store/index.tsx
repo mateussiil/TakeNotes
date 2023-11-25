@@ -1,4 +1,4 @@
-import { AnimatedProp, DrawingInfo, SkPaint, SkPath} from '@shopify/react-native-skia';
+import { DrawingInfo, SkPaint, SkPath} from '@shopify/react-native-skia';
 import {create} from 'zustand';
 import utils from '../drawing/utils';
 
@@ -18,6 +18,10 @@ interface DrawingStore {
    */
   setCompletedPaths: (completedPaths: CurrentPath[]) => void;
   /**
+  * A function to add completed path in current paths
+  */
+  addCompletedPath: (completedPath: CurrentPath) => void;
+  /**
    * Current stroke
    */
   stroke: SkPaint;
@@ -31,7 +35,7 @@ interface DrawingStore {
   color: string;
   setStrokeWidth: (strokeWidth: number) => void;
   setColor: (color: string) => void;
-  setStroke: (stroke: AnimatedProp<SkPaint | undefined, any>) => void;
+  setStroke: (stroke: SkPaint) => void;
   canvasInfo: Partial<DrawingInfo> | null;
   setCanvasInfo: (canvasInfo: Partial<DrawingInfo>) => void;
 }
@@ -39,7 +43,10 @@ interface DrawingStore {
 const useDrawingStore = create<DrawingStore>((set, get) => ({
   completedPaths: [],
   setCompletedPaths: completedPaths => {
-    set({completedPaths});
+    set({ completedPaths });
+  },
+  addCompletedPath: completedPath => {
+    set({ completedPaths: get().completedPaths.concat(completedPath) });
   },
   strokeWidth: 2,
   color: 'black',
