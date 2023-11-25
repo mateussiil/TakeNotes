@@ -17,8 +17,8 @@ const Header = () => {
   };
 
   const save = () => {
-    let canvasInfo = useDrawingStore.getState().canvasInfo;
-    let paths = useDrawingStore.getState().completedPaths;
+    const canvasInfo = useDrawingStore.getState().canvasInfo;
+    const paths = useDrawingStore.getState().completedPaths;
     if (paths.length === 0) {
       return;
     }
@@ -26,32 +26,14 @@ const Header = () => {
     // convertSkiaPathToJSON(paths[0].path);
     if (canvasInfo?.width && canvasInfo?.height) {
       console.log(
-        utils.makeRoughPointsFromPaths(paths, {
-          width: canvasInfo.width,
-          height: canvasInfo.height,
-        }),
+        JSON.stringify(
+          utils.makeRoughPointsFromPaths(paths, {
+            width: canvasInfo.width,
+            height: canvasInfo.height,
+          }),
+        ),
       );
     }
-  };
-
-  const convertSkiaPathToJSON = skiaPath => {
-    const jsonPath = {
-      type: 'path',
-      data: [],
-    };
-
-    for (let i = 0; i < skiaPath.countVerbs(); i++) {
-      const verb = skiaPath.getVerb(i);
-
-      jsonPath.data.push({
-        x: skiaPath.getPoint(i).x,
-        y: skiaPath.getPoint(i).y,
-      });
-    }
-
-    console.log(jsonPath);
-
-    return jsonPath;
   };
 
   const undo = () => {
@@ -61,6 +43,7 @@ const Header = () => {
   const redo = () => {
     history.redo();
   };
+  
   return (
     <View
       style={{

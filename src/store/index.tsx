@@ -1,10 +1,10 @@
-import {DrawingInfo, IPaint, IPath, Path} from '@shopify/react-native-skia';
+import { AnimatedProp, DrawingInfo, SkPaint, SkPath} from '@shopify/react-native-skia';
 import {create} from 'zustand';
 import utils from '../drawing/utils';
 
 export type CurrentPath = {
-  path: IPath;
-  paint: IPaint;
+  path: SkPath;
+  paint: SkPaint;
   color?: string;
 };
 
@@ -20,7 +20,7 @@ interface DrawingStore {
   /**
    * Current stroke
    */
-  stroke: IPaint;
+  stroke: SkPaint;
   /**
    * Width of the stroke
    */
@@ -31,7 +31,7 @@ interface DrawingStore {
   color: string;
   setStrokeWidth: (strokeWidth: number) => void;
   setColor: (color: string) => void;
-  setStroke: (stroke: IPaint) => void;
+  setStroke: (stroke: AnimatedProp<SkPaint | undefined, any>) => void;
   canvasInfo: Partial<DrawingInfo> | null;
   setCanvasInfo: (canvasInfo: Partial<DrawingInfo>) => void;
 }

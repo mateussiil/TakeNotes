@@ -4,12 +4,20 @@ import {
   StrokeCap,
   StrokeJoin,
 } from '@shopify/react-native-skia';
+import {customAlphabet} from 'nanoid/non-secure';
 import {CurrentPath} from '../store';
 
-//@ts-ignore adding a function to get random value from array
-Array.prototype.sample = function () {
-  return this[Math.floor(Math.random() * this.length)];
-};
+export type ExcalidrawElement = {
+  points: [number, number][];
+  strokeWidth: number;
+  strokeLinecap: any;
+  strokeLinejoin: any;
+  strokeColor: string | undefined;
+  x: number;
+  y: number;
+} 
+
+const nanoid = customAlphabet('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-', 20);
 
 /**
  * Get a stroke with the given parameters
@@ -47,13 +55,13 @@ const getElevation = (elevation: number) => {
   };
 };
 
-const convertSkiaPathToExcalidrawElement = () => {
-  const excalidrawElement = {
+const convertSkiaPathToExcalidrawElement = (excalidrawElement: Partial<ExcalidrawElement>) => {
+  return {
     type: 'freedraw',
     version: 45,
     versionNonce: 188043502,
     isDeleted: false,
-    id: Math.floor(Math.random() * 1000000), // generate a unique ID
+    id: randomId(), // generate a unique ID
     fillStyle: 'hachure',
     strokeWidth: 1,
     strokeStyle: 'solid',
@@ -78,11 +86,16 @@ const convertSkiaPathToExcalidrawElement = () => {
     lastCommittedPoint: null,
     simulatePressure: true,
     pressures: [],
+    ...excalidrawElement,
   };
-
-  return excalidrawElement;
 };
 
+/**
+ * https://stackoverflow.com/questions/25384052/convert-svg-path-d-attribute-to-a-array-of-points
+ * @param paths
+ * @param options
+ * @returns
+ */
 const makeRoughPointsFromPaths = (
   paths: CurrentPath[],
   options: {
@@ -103,27 +116,45 @@ const makeRoughPointsFromPaths = (
           }
         : null,
     )
-    .filter(path => path.points.length);
+    .filter(path => path && path.points.length);
 
-  const pointArrays = commands.map(command => {
-    return {
-      ...command,
-      points: command.points
-        .map(function (points) {
-          var pointsArray = points.slice(1, points.length).split(' ');
+  const firstPoint: Array<[number, number]> = [];
+  let firstArray: [number, number] = [0, 0];
 
-          var pairsArray = [];
-          for (var i = 0; i < pointsArray.length; i += 2) {
-            pairsArray.push([+pointsArray[i], +pointsArray[i + 1]]);
-          }
+  return commands
+    .map(command => {
+      return {
+        ...command,
+        points: command?.points
+          .map(function (points: string, index: number) {
+            const pointsArray = points.slice(1, points.length).split(' ');
 
-          return pairsArray;
-        })
-        .flat(1),
-    };
-  });
+            const pairsArray = [];
 
-  return pointArrays;
+            for (let i = 0; i < pointsArray.length; i += 2) {
+              if (index === 0) {
+                firstArray = [+pointsArray[i], +pointsArray[i + 1]];
+                firstPoint.push(firstArray);
+              }
+
+              pairsArray.push([
+                +pointsArray[i] - firstArray[0],
+                +pointsArray[i + 1] - firstArray[1],
+              ]);
+            }
+
+            return pairsArray;
+          })
+          .flat(1),
+      };
+    })
+    .map((objects, index) =>
+      convertSkiaPathToExcalidrawElement({
+        ...objects,
+        x: firstPoint[index][0],
+        y: firstPoint[index][1],
+      }),
+    );
 };
 
 const makeSvgFromPaths = (
@@ -154,6 +185,8 @@ const makeSvgFromPaths = (
     </g>
     </svg>`;
 };
+
+export const randomId = () => (false ? `id${1}` : nanoid());
 
 export default {
   getPaint,

@@ -1,8 +1,8 @@
 import {
   Canvas,
   ExtendedTouchInfo,
-  ICanvas,
   Path,
+  SkCanvas,
   Skia,
   SkiaView,
   TouchInfo,
@@ -23,7 +23,7 @@ import Toolbar from '../components/toolbar';
 
 const Drawing = () => {
   const touchState = useRef(false);
-  const canvasRef = useRef<ICanvas>();
+  const canvasRef = useRef<SkCanvas>();
   const currentPath = useRef<CurrentPath | null>();
   const {width} = useWindowDimensions();
   const completedPaths = useDrawingStore(state => state.completedPaths);
@@ -55,7 +55,7 @@ const Drawing = () => {
       const {x, y} = touchInfo;
       currentPath.current = {
         path: Skia.Path.Make(),
-        paint: stroke.copy(),
+        paint: stroke?.copy(),
       };
 
       touchState.current = true;
@@ -88,7 +88,7 @@ const Drawing = () => {
       return;
     }
 
-    let updatedPaths = [...completedPaths];
+    const updatedPaths = [...completedPaths];
     updatedPaths.push({
       path: currentPath.current?.path.copy(),
       paint: currentPath.current?.paint.copy(),
@@ -150,7 +150,6 @@ const Drawing = () => {
           />
 
           <Canvas
-            // ref={canvas}
             style={{
               height: canvasHeight,
               width: width - 24,
@@ -160,13 +159,11 @@ const Drawing = () => {
               <Path
                 key={path.path.toSVGString()}
                 path={path.path}
-                //@ts-ignore
-                paint={{current: path.paint}}
+                paint={path.paint}
               />
             ))}
           </Canvas>
         </View>
-
         <Toolbar />
       </View>
     </SafeAreaView>

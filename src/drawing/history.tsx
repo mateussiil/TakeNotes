@@ -12,7 +12,7 @@ function undo() {
   if (history.undo.length === 0) {
     return;
   }
-  let lastPath = history.undo[history.undo.length - 1];
+  const lastPath = history.undo[history.undo.length - 1];
   history.redo.push(lastPath);
   history.undo.splice(history.undo.length - 1, 1);
   useDrawingStore.getState().setCompletedPaths([...history.undo]);
@@ -22,7 +22,7 @@ function redo() {
   if (history.redo.length === 0) {
     return;
   }
-  let lastPath = history.redo[history.redo.length - 1];
+  const lastPath = history.redo[history.redo.length - 1];
   history.redo.splice(history.redo.length - 1, 1);
   history.undo.push(lastPath);
   useDrawingStore.getState().setCompletedPaths([...history.undo]);
