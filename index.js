@@ -1,3 +1,6 @@
+//always in the top
+import 'react-native-gesture-handler';
+
 /**
  * @format
  */

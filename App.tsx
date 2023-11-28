@@ -1,8 +1,9 @@
+
 import React, { useEffect, useState } from 'react';
-import Drawing from './src/drawing';
-import { Calendar, ICalendarEventBase } from 'react-native-big-calendar';
+import { ICalendarEventBase } from 'react-native-big-calendar';
 import { fetchEvents } from './src/service/events';
 import { Event } from './src/@types/events';
+import { Routes } from './src/routes';
 import { NavigationContainer } from '@react-navigation/native';
 
 const initialEvents: ICalendarEventBase[] = [
@@ -55,8 +56,12 @@ function App(): JSX.Element {
   }
 
   // return <Calendar onPressEvent={(event)=> console.log(event)} mode='3days' date={new Date()} events={events} height={600} />
-  return <NavigationContainer><Drawing /></NavigationContainer>
-   
+  return (
+    <NavigationContainer>
+      <Routes />
+    </NavigationContainer>
+  )
+
 }
 
 export default App;

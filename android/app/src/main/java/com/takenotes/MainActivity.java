@@ -1,5 +1,6 @@
 package com.takenotes;
 
+//top of this file below your package statement
 import android.os.Bundle;
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;
