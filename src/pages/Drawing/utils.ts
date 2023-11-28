@@ -5,7 +5,7 @@ import {
   StrokeJoin,
 } from '@shopify/react-native-skia';
 import {customAlphabet} from 'nanoid/non-secure';
-import {CurrentPath} from '../store';
+import {CurrentPath} from '../../store';
 
 export type ExcalidrawElement = {
   points: [number, number][];

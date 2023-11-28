@@ -1,8 +1,8 @@
 import React from 'react';
 import {Text, View, TouchableOpacity, StyleSheet} from 'react-native';
 import useDrawingStore from '../store';
-import history from '../drawing/history';
-import utils from '../drawing/utils';
+import history from '../pages/Drawing/history';
+import utils from '../pages/Drawing/utils';
 
 const Header = () => {
   /**

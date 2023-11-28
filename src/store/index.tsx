@@ -1,6 +1,6 @@
 import { DrawingInfo, SkPaint, SkPath} from '@shopify/react-native-skia';
 import {create} from 'zustand';
-import utils from '../drawing/utils';
+import utils from '../pages/Drawing/utils';
 
 export type CurrentPath = {
   path: SkPath;

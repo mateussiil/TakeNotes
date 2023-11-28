@@ -1,4 +1,4 @@
-import useDrawingStore, {CurrentPath} from '../store';
+import useDrawingStore, {CurrentPath} from '../../store';
 
 const history: {
   undo: CurrentPath[];

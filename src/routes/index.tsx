@@ -1,19 +1,14 @@
-import { NavigationContainer } from "@react-navigation/native";
 import { createDrawerNavigator } from '@react-navigation/drawer';
-import Drawing from "../drawing";
-import { Text } from "react-native";
+import CalendarPage from "../pages/Calendar";
+import Drawing from '../pages/Drawing';
 
 const Drawer = createDrawerNavigator();
 
-const Hello = () => {
-  return <Text>Olá</Text>
-}
-
 export const Routes = () => {
   return (
-    <Drawer.Navigator initialRouteName="Drawing">
+    <Drawer.Navigator initialRouteName="Calendar">
+      <Drawer.Screen name="Calendar" component={CalendarPage} />
       <Drawer.Screen name="Drawing" component={Drawing} />
-      <Drawer.Screen name="Hello" component={Hello} />
     </Drawer.Navigator>
   )
 }

@@ -3,8 +3,8 @@ import {StyleSheet, View} from 'react-native';
 import Color from '../components/color';
 import Stroke from '../components/stroke';
 import useDrawingStore from '../store';
-import constants from '../drawing/constants';
-import utils from '../drawing/utils';
+import constants from '../pages/Drawing/constants';
+import utils from '../pages/Drawing/utils';
 
 const Toolbar = () => {
   const currentColor = useDrawingStore(state => state.color);

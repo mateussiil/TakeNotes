@@ -16,10 +16,10 @@ import {
   useWindowDimensions,
   View,
 } from 'react-native';
-import useDrawingStore, {CurrentPath} from '../store';
-import Header from '../components/header';
+import useDrawingStore, {CurrentPath} from '../../store';
+import Header from '../../components/header';
 import history from './history';
-import Toolbar from '../components/toolbar';
+import Toolbar from '../../components/toolbar';
 import { randomId } from './utils';
 
 const Drawing = () => {
