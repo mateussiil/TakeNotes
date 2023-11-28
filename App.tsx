@@ -3,6 +3,7 @@ import Drawing from './src/drawing';
 import { Calendar, ICalendarEventBase } from 'react-native-big-calendar';
 import { fetchEvents } from './src/service/events';
 import { Event } from './src/@types/events';
+import { NavigationContainer } from '@react-navigation/native';
 
 const initialEvents: ICalendarEventBase[] = [
   {
@@ -28,7 +29,7 @@ function App(): JSX.Element {
     try {
       const events = await fetchEvents();
       const newItems = reformatEvents(events);
-      console.log("init: ", 'newItems');
+      console.log("init: ", newItems);
       setEvents(newItems);
     } catch (e) {
       console.log(e);
@@ -53,8 +54,9 @@ function App(): JSX.Element {
     });
   }
 
-  return <Calendar onPressEvent={(event)=> console.log(event)} mode='3days' date={new Date()} events={events} height={600} />
-  // return <Drawing />;
+  // return <Calendar onPressEvent={(event)=> console.log(event)} mode='3days' date={new Date()} events={events} height={600} />
+  return <NavigationContainer><Drawing /></NavigationContainer>
+   
 }
 
 export default App;
