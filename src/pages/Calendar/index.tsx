@@ -27,7 +27,7 @@ const CalendarPage: React.FC = () => {
     try {
       const events = await fetchEvents();
       const newItems = reformatEvents(events);
-      console.log("init: ", newItems);
+      console.log("init: ", newItems.length);
       setEvents(newItems);
     } catch (e) {
       console.log(e);

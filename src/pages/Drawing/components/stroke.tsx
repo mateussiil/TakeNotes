@@ -1,6 +1,6 @@
 import React from 'react';
 import {GestureResponderEvent, TouchableOpacity, View} from 'react-native';
-import useDrawingStore from '../store';
+import useDrawingStore from '../../../store';
 
 const Stroke = ({
   onPress,

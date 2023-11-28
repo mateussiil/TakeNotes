@@ -5,8 +5,8 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import utils from '../pages/Drawing/utils';
-import useDrawingStore from '../store';
+import utils from '../utils';
+import useDrawingStore from '../../../store';
 
 const Color = ({
   onPress,

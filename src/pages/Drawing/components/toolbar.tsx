@@ -1,10 +1,10 @@
 import React, {useState} from 'react';
 import {StyleSheet, View} from 'react-native';
-import Color from '../components/color';
-import Stroke from '../components/stroke';
-import useDrawingStore from '../store';
-import constants from '../pages/Drawing/constants';
-import utils from '../pages/Drawing/utils';
+import Color from './color';
+import Stroke from './stroke';
+import useDrawingStore from '../../../store';
+import constants from '../constants';
+import utils from '../utils';
 
 const Toolbar = () => {
   const currentColor = useDrawingStore(state => state.color);
