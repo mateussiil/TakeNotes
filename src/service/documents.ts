@@ -12,7 +12,6 @@ export async function fetchDocuments(timeInfo = null) {
   }
 
   const documents = res.data;
-  console.log("fetchdocuments: ", documents);
   return documents;
 }
 
@@ -24,7 +23,6 @@ export async function fetchDocumentsByEventIdAndDate(eventId: string, date: any)
   });
 
   const documents = res.data;
-  console.log("fetchdocuments: ", documents);
   return documents;
 }
 
@@ -39,28 +37,24 @@ export async function uploadFile(payload: any) {
   const res = await axios.post(`${HOST}/documents`, formData, {});
 
   const document = res.data;
-  console.log("uploadFile: ", document);
   return document;
 }
 
 export async function showDocument(id:string) {
   const res = await axios.get(`${HOST}/documents/${id}`);
   const document = res.data;
-  console.log("showDocument: ", document);
   return document;
 }
 
 export async function updateDocument(id:string, documentInput:any) {
   const res = await axios.put(`${HOST}/documents/${id}`, documentInput);
   const document = res.data;
-  console.log("updateDocument: ", document);
   return document;
 }
 
 export async function deleteDocument(id:string) {
   const res = await axios.delete(`${HOST}/documents/${id}`);
   const document = res.data;
-  console.log(`deletedDocument: ${id}`);
   return document;
 }
 

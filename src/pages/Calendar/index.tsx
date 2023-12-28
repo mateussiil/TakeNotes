@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Calendar as BigCalendar, ICalendarEventBase } from 'react-native-big-calendar';
 import { fetchEvents } from '../../service/events';
 import { Event } from '../../@types/events';
+import { DefaultScreenProps } from '../../routes';
 
 const initialEvents: ICalendarEventBase[] = [
   {
@@ -16,7 +17,7 @@ const initialEvents: ICalendarEventBase[] = [
   },
 ]
 
-const CalendarPage: React.FC = () => {
+const CalendarScreen = ({ navigation }: DefaultScreenProps) => {
   const [events, setEvents] = useState<ICalendarEventBase[]>(initialEvents);
 
   useEffect(() => {
@@ -27,7 +28,6 @@ const CalendarPage: React.FC = () => {
     try {
       const events = await fetchEvents();
       const newItems = reformatEvents(events);
-      console.log("init: ", newItems.length);
       setEvents(newItems);
     } catch (e) {
       console.log(e);
@@ -55,4 +55,4 @@ const CalendarPage: React.FC = () => {
 
 }
 
-export default CalendarPage;
+export default CalendarScreen;

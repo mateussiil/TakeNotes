@@ -1,14 +1,25 @@
-import { createDrawerNavigator } from '@react-navigation/drawer';
-import CalendarPage from "../pages/Calendar";
-import Drawing from '../pages/Drawing';
+import { DrawerScreenProps, createDrawerNavigator } from '@react-navigation/drawer';
 
-const Drawer = createDrawerNavigator();
+import CalendarScreen from "../pages/Calendar";
+import Drawing from '../pages/Drawing';
+import NewEvent from '../pages/NewEvent';
+
+export type RootDrawerParamList = {
+  Calendar: undefined;
+  Drawing: undefined;
+  Event: undefined
+};
+
+const Drawer = createDrawerNavigator<RootDrawerParamList>();
+
+export type DefaultScreenProps = DrawerScreenProps<RootDrawerParamList>;
 
 export const Routes = () => {
   return (
     <Drawer.Navigator initialRouteName="Calendar">
-      <Drawer.Screen name="Calendar" component={CalendarPage} />
+      <Drawer.Screen name="Calendar" component={CalendarScreen} />
       <Drawer.Screen name="Drawing" component={Drawing} />
+      <Drawer.Screen name="Event" component={NewEvent} />
     </Drawer.Navigator>
   )
 }

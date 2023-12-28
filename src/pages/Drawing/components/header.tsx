@@ -25,14 +25,14 @@ const Header = () => {
     console.log('saving');
     // convertSkiaPathToJSON(paths[0].path);
     if (canvasInfo?.width && canvasInfo?.height) {
-      console.log(
-        JSON.stringify(
-          utils.makeRoughPointsFromPaths(paths, {
-            width: canvasInfo.width,
-            height: canvasInfo.height,
-          }),
-        ),
-      );
+      // console.log(
+      //   JSON.stringify(
+      //     utils.makeRoughPointsFromPaths(paths, {
+      //       width: canvasInfo.width,
+      //       height: canvasInfo.height,
+      //     }),
+      //   ),
+      // );
     }
   };
 
